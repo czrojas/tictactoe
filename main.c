@@ -77,10 +77,17 @@ int main(void) {
     ++j;
 
   }
-  printf("\nThe Winner is player %d\n", winner);
-  printBoard(board);
-  printf("\n");
 
+  if (!openSpot(board)) {
+    printf("\nThe match ends in a draw.\n\n");
+    printBoard(board);
+    printf("\n");
+  }
+  else {
+    printf("\nPlayer %d has won the match.\n\n", winner);
+    printBoard(board);
+    printf("\n");
+  }
 
   return 0;
 }
