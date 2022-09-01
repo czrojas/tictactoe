@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <string.h>
 
 void printBoard(char* Board) {
   // This functions purpose is to print the playing board
 
-  // initial i is 1 to be able to print newline if iteration is divisible by 3
+  // Initial I Is 1 To Be Able To Print Newline If Iteration Is Divisible By 3
   for (int i = 1; i < 10; i++) {
 
     printf("%c", Board[i-1]); // Print the board at [i-1] to print full board
@@ -19,37 +20,39 @@ void printBoard(char* Board) {
 void promptPlayer(int player, char* Board) {
   int playerPos = 0;
 
-  // FIXME: Make this agnostic
-  if ( !player ) {
-    printf("Player 0, please choose a position, 0-8: ");
-    scanf("%d", &playerPos);
-    Board[playerPos] = '0';
-  }
- 
-  return; 
+  printf("Player %d where do you want to place your piece? 0-8: ", player);
+  scanf("%d", &playerPos);
+  Board[playerPos] = (char) 48 + player;
+
+  return;
 }
 
-_Bool playerTies(char* Board) {
+int playerWin(char* Board) {
+  
+  return 0;
+}
+
+int openSpot(char* Board) {
+
   return 1;
 }
 
 
-
-void playerWin(int Winner, char* Board) {}
-
 int main(void) {
   // Board we will use
   char board[] = "---------";
-  int winner = 1;
 
   printBoard(board);
   promptPlayer(0, board);
-  printBoard(board);
 
-
-  // Game Loop
-  while ( !winner ) {
-    
+  int j = 1;
+  // Game loop
+  while ( !(playerWin(board)) && openSpot(board)) {
+    int player = (j % 2);
+    printBoard(board);
+    promptPlayer(player, board);
+    ++j;
+   
   }
 
 
