@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 
 void printBoard(char* Board) {
   // This functions purpose is to print the playing board
@@ -27,33 +26,60 @@ void promptPlayer(int player, char* Board) {
   return;
 }
 
-int playerWin(char* Board) {
-  
+int playerWin(int *Winner, char* Board) {
+
+  int results[8] = {Board[0]+Board[1]+Board[2], Board[3]+Board[4]+Board[5],
+		    Board[6]+Board[7]+Board[8], Board[0]+Board[3]+Board[6],
+		    Board[1]+Board[4]+Board[7], Board[2]+Board[5]+Board[8],
+		    Board[0]+Board[4]+Board[8], Board[2]+Board[4]+Board[6]};
+
+  for (int i = 0; i < 8; ++i) {
+    if (results[i] == 144) {
+      *Winner = 0;
+      return 1;
+    }
+    else if (results[i] == 147) {
+      *Winner = 1;
+      return 2;
+    }
+  }
+
   return 0;
 }
 
-int openSpot(char* Board) {
 
-  return 1;
+int openSpot(char* Board) {
+  // Check if there is space for players to make a move
+  for (int i = 0; i < 9; ++i) {
+    if (Board[i] == '-') {
+      return 1;
+    }
+  }
+  
+  return 0;
 }
 
 
 int main(void) {
   // Board we will use
   char board[] = "---------";
+  int winner = -1;
 
   printBoard(board);
   promptPlayer(0, board);
 
   int j = 1;
   // Game loop
-  while ( !(playerWin(board)) && openSpot(board)) {
+  while ( !(playerWin(&winner, board)) && openSpot(board)) {
     int player = (j % 2);
     printBoard(board);
     promptPlayer(player, board);
     ++j;
-   
+
   }
+  printf("\nThe Winner is player %d\n", winner);
+  printBoard(board);
+  printf("\n");
 
 
   return 0;
