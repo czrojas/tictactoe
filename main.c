@@ -59,7 +59,6 @@ int openSpot(char* Board) {
   return 0;
 }
 
-
 int main(void) {
   // Board we will use
   char board[] = "---------";
