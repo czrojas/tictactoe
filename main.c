@@ -21,6 +21,13 @@ void promptPlayer(int player, char* Board) {
 
   printf("Player %d where do you want to place your piece? 0-8: ", player);
   scanf("%d", &playerPos);
+
+  while(playerPos < 0 || playerPos > 8) {
+    printf("Player %d please give a valid position (0-8): ", player);
+    scanf("%d", &playerPos);
+  }
+
+  
   Board[playerPos] = (char) 48 + player;
 
   return;
