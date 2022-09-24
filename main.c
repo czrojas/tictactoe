@@ -3,7 +3,7 @@
 void printBoard(char* Board) {
   // This functions purpose is to print the playing board
 
-  // Initial I Is 1 To Be Able To Print Newline If Iteration Is Divisible By 3
+  // Initial i is 1 in order to print newline if iteration is divisible by 3
   for (int i = 1; i < 10; i++) {
 
     printf("%c", Board[i-1]); // Print the board at [i-1] to print full board
@@ -22,30 +22,32 @@ void promptPlayer(int player, char* Board) {
   printf("Player %d where do you want to place your piece? 0-8: ", player);
   scanf("%d", &playerPos);
 
+  // prompting for valid postion
   while(playerPos < 0 || playerPos > 8) {
     printf("Player %d please give a valid position (0-8): ", player);
     scanf("%d", &playerPos);
   }
 
-  
-  Board[playerPos] = (char) 48 + player;
+  // Change board at pos to ascii character of player number 
+  Board[playerPos] = (char) 48 + player; 
 
   return;
 }
 
 int playerWin(int *Winner, char* Board) {
-
+  // We check all 3 horizontal, 3 vertical, forward & backward diagnols
   int results[8] = {Board[0]+Board[1]+Board[2], Board[3]+Board[4]+Board[5],
 		    Board[6]+Board[7]+Board[8], Board[0]+Board[3]+Board[6],
 		    Board[1]+Board[4]+Board[7], Board[2]+Board[5]+Board[8],
 		    Board[0]+Board[4]+Board[8], Board[2]+Board[4]+Board[6]};
-
+  
+  // Check for a winner, there is a winner if the result of expresion 3 * asciivalue of player number (0 or 1)
   for (int i = 0; i < 8; ++i) {
-    if (results[i] == 144) {
+    if (results[i] == 144) { // Ascii value of 0 is 47, hence 47*3 is 144 so there are three 0s, Winnner!
       *Winner = 0;
       return 1;
     }
-    else if (results[i] == 147) {
+    else if (results[i] == 147) { // Ascii value of 1 is 48, hence 48*3 is 147 so there are three 1s, Winner!
       *Winner = 1;
       return 2;
     }
@@ -77,7 +79,7 @@ int main(void) {
   int j = 1;
   // Game loop
   while ( !(playerWin(&winner, board)) && openSpot(board)) {
-    int player = (j % 2);
+    int player = (j % 2); // alternates between 1 & 0
     printBoard(board);
     promptPlayer(player, board);
     ++j;
