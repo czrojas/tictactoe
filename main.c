@@ -86,12 +86,12 @@ int main(void) {
 
   }
 
-  if (!openSpot(board)) {
+  if (!openSpot(board)) { // If no spots left declare draw
     printf("\nThe match ends in a draw.\n\n");
     printBoard(board);
     printf("\n");
   }
-  else {
+  else { // Declare winner
     printf("\nPlayer %d has won the match.\n\n", winner);
     printBoard(board);
     printf("\n");
