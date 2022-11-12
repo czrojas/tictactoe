@@ -1,7 +1,6 @@
 
 tictactoe : main.c
-	gcc -Wall -g main.c -o tictactoe
-
+	gcc -Wall -ggdb main.c -o tictactoe
 clean:
 	rm tictactoe
 

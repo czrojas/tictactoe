@@ -5,14 +5,12 @@ void printBoard(char* Board) {
 
   // Initial i is 1 in order to print newline if iteration is divisible by 3
   for (int i = 1; i < 10; i++) {
-
     printf("%c", Board[i-1]); // Print the board at [i-1] to print full board
     if ( !(i%3) ) {
       // When i is 3,6,9
       printf("\n");
       }
   }
-
   return;
 }
 
@@ -28,26 +26,39 @@ void promptPlayer(int player, char* Board) {
     scanf("%d", &playerPos);
   }
 
-  // Change board at pos to ascii character of player number 
-  Board[playerPos] = (char) 48 + player; 
+  if(player) {
+    while(Board[playerPos] == 'O') {
+      printf("Player 1 please pick a valid position not already taken: ");
+      scanf("%d", &playerPos);
+    }
+    Board[playerPos] = (char) 88;
+    return;
 
-  return;
+  }
+  else {
+    while(Board[playerPos] == 'X') {
+      printf("Player 0 please pick a valid position not already taken: ");
+      scanf("%d", &playerPos);
+    }
+    Board[playerPos] = (char) 79;
+    return;
+  }
+
 }
 
 int playerWin(int *Winner, char* Board) {
   // We check all 3 horizontal, 3 vertical, forward & backward diagnols
   int results[8] = {Board[0]+Board[1]+Board[2], Board[3]+Board[4]+Board[5],
-		    Board[6]+Board[7]+Board[8], Board[0]+Board[3]+Board[6],
 		    Board[1]+Board[4]+Board[7], Board[2]+Board[5]+Board[8],
 		    Board[0]+Board[4]+Board[8], Board[2]+Board[4]+Board[6]};
   
-  // Check for a winner, there is a winner if the result of expresion 3 * asciivalue of player number (0 or 1)
+  // Check for a winner, there is a winner if the result of expresion 3 * asciivalue of player number representation on board (X or O)
   for (int i = 0; i < 8; ++i) {
-    if (results[i] == 144) { // Ascii value of 0 is 47, hence 47*3 is 144 so there are three 0s, Winnner!
+    if (results[i] == 237) { // Ascii value of 0 is 47, hence 47*3 is 144 so there are three 0s, Winnner!
       *Winner = 0;
       return 1;
     }
-    else if (results[i] == 147) { // Ascii value of 1 is 48, hence 48*3 is 147 so there are three 1s, Winner!
+    else if (results[i] == 264) { // Ascii value of 1 is 48, hence 48*3 is 147 so there are three 1s, Winner!
       *Winner = 1;
       return 2;
     }
@@ -59,10 +70,14 @@ int playerWin(int *Winner, char* Board) {
 
 int openSpot(char* Board) {
   // Check if there is space for players to make a move
+  int count = 0;
   for (int i = 0; i < 9; ++i) {
-    if (Board[i] == '-') {
-      return 1;
+    if (Board[i] == 'X' || Board[i] == 'O') {
+      count ++;
     }
+  }
+  if (count < 9) {
+    return 1;
   }
   
   return 0;
@@ -70,11 +85,12 @@ int openSpot(char* Board) {
 
 int main(void) {
   // Board we will use
-  char board[] = "---------";
+  char board[] = "012345678";
   int winner = -1;
 
   printBoard(board);
   promptPlayer(0, board);
+  
 
   int j = 1;
   // Game loop
@@ -99,3 +115,4 @@ int main(void) {
 
   return 0;
 }
+
