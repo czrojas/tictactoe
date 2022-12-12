@@ -21,29 +21,18 @@ void promptPlayer(int player, char* Board) {
   scanf("%d", &playerPos);
 
   // prompting for valid postion
-  while(playerPos < 0 || playerPos > 8) {
+  while(!(playerPos >= 0 && playerPos <= 8) || ((playerPos >= 0 && playerPos <= 8) && (Board[playerPos] == 'X' || Board[playerPos] == 'O'))) {
     printf("Player %d please give a valid position (0-8): ", player);
     scanf("%d", &playerPos);
   }
-
-  if(player) {
-    while(Board[playerPos] == 'O') {
-      printf("Player 1 please pick a valid position not already taken: ");
-      scanf("%d", &playerPos);
-    }
-    Board[playerPos] = (char) 88;
-    return;
-
+  if(player == 1) {
+    Board[playerPos] = 88;
   }
   else {
-    while(Board[playerPos] == 'X') {
-      printf("Player 0 please pick a valid position not already taken: ");
-      scanf("%d", &playerPos);
-    }
-    Board[playerPos] = (char) 79;
-    return;
+    Board[playerPos] = 79;
   }
-
+  
+  return;
 }
 
 int playerWin(int *Winner, char* Board) {
