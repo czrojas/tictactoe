@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdio_ext.h>
 
 void printBoard(char* Board) {
   // This functions purpose is to print the playing board
@@ -17,7 +16,6 @@ void printBoard(char* Board) {
 
 void promptPlayer(int player, char* Board) {
   int playerPos = 0;
-
 
   printf("Player %d where do you want to place your piece? 0-8: ", player);
   int inp = scanf("%d", &playerPos) == 1;
@@ -96,12 +94,8 @@ int main(void) {
   char board[] = "012345678";
   int winner = -1;
 
-  int x = __flbf(stdout);
-  printf("%d\n", x);
-
   printBoard(board);
   promptPlayer(0, board);
-
 
   int j = 1;
   // Game loop
@@ -113,12 +107,14 @@ int main(void) {
 
   }
 
-  if (!openSpot(board)) { // If no spots left declare draw
+  if (!openSpot(board)) {
+    // If no spots left declare draw
     printf("\nThe match ends in a draw.\n\n");
     printBoard(board);
     printf("\n");
   }
-  else { // Declare winner
+  else {
+    // Declare winner
     printf("\nPlayer %d has won the match.\n\n", winner);
     printBoard(board);
     printf("\n");
