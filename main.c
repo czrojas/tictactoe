@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdio_ext.h>
 
 void printBoard(char* Board) {
   // This functions purpose is to print the playing board
@@ -17,21 +18,38 @@ void printBoard(char* Board) {
 void promptPlayer(int player, char* Board) {
   int playerPos = 0;
 
+
   printf("Player %d where do you want to place your piece? 0-8: ", player);
-  scanf("%d", &playerPos);
+  int inp = scanf("%d", &playerPos) == 1;
+
+  while((getchar()) != '\n')
+    {
+    }
 
   // prompting for valid postion
-  while(!(playerPos >= 0 && playerPos <= 8) || ((playerPos >= 0 && playerPos <= 8) && (Board[playerPos] == 'X' || Board[playerPos] == 'O'))) {
-    printf("Player %d please give a valid position (0-8): ", player);
-    scanf("%d", &playerPos);
-  }
+  // !i or (i and (!r or (r and t)))
+  int y = (inp == 0) || ((inp == 1) && (!(playerPos >= 0 && playerPos <= 8) || ((playerPos >= 0 && playerPos <= 8) && (Board[playerPos] == 'X' || Board[playerPos] == 'O'))));
+
+  while(y)
+    {
+      printf("Player %d please give a valid position (0-8): ", player);
+      fflush(stdout);
+      inp = scanf("%d", &playerPos) == 1;
+
+      while((getchar()) != '\n')
+	{
+	}
+
+      y = (inp == 0) || ((inp == 1) && (!(playerPos >= 0 && playerPos <= 8) || ((playerPos >= 0 && playerPos <= 8) && (Board[playerPos] == 'X' || Board[playerPos] == 'O'))));
+    }
+
   if(player == 1) {
     Board[playerPos] = 88;
   }
   else {
     Board[playerPos] = 79;
   }
-  
+
   return;
 }
 
@@ -40,7 +58,8 @@ int playerWin(int *Winner, char* Board) {
   int results[8] = {Board[0]+Board[1]+Board[2], Board[3]+Board[4]+Board[5],
 		    Board[1]+Board[4]+Board[7], Board[2]+Board[5]+Board[8],
 		    Board[0]+Board[4]+Board[8], Board[2]+Board[4]+Board[6]};
-  
+
+
   // Check for a winner, there is a winner if the result of expresion 3 * asciivalue of player number representation on board (X or O)
   for (int i = 0; i < 8; ++i) {
     if (results[i] == 237) { // Ascii value of 0 is 47, hence 47*3 is 144 so there are three 0s, Winnner!
@@ -68,7 +87,7 @@ int openSpot(char* Board) {
   if (count < 9) {
     return 1;
   }
-  
+
   return 0;
 }
 
@@ -77,9 +96,12 @@ int main(void) {
   char board[] = "012345678";
   int winner = -1;
 
+  int x = __flbf(stdout);
+  printf("%d\n", x);
+
   printBoard(board);
   promptPlayer(0, board);
-  
+
 
   int j = 1;
   // Game loop
@@ -104,4 +126,3 @@ int main(void) {
 
   return 0;
 }
-
