@@ -1,6 +1,15 @@
+CC=gcc
+CFLAGS=-Wall -ggdb
+OBJS=tictactoe.o
+BIN=tictactoe
+INCLUDE=include
+SRC=src
 
-tictactoe : main.c
-	gcc -Wall -ggdb main.c -o tictactoe
+bin/$(BIN) : objs/$(OBJS) 
+	$(CC) $(CFLAGS) objs/$(OBJS) -o bin/$(BIN)
+
+objs/$(OBJS) : $(SRC)/main.c
+	$(CC) $(CFLAGS) -I$(INCLUDE) -c $(SRC)/main.c -o objs/$(OBJS)
+
 clean:
-	rm tictactoe
-
+	rm bin/* objs/*
