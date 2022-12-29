@@ -5,7 +5,7 @@ BIN=tictactoe
 INCLUDE=include
 SRC=src
 
-bin/$(BIN) : objs/$(OBJS) 
+bin/$(BIN) : objs/$(OBJS)
 	$(CC) $(CFLAGS) objs/$(OBJS) -o bin/$(BIN)
 
 objs/$(OBJS) : $(SRC)/main.c

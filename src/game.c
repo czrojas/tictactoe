@@ -3,6 +3,7 @@
 void printBoard(char *Board) {
   // This functions purpose is to print the playing board
   // Initial i is 1 in order to print newline if iteration is divisible by 3
+  putc('\n', stdout);
   for (int i = 1; i < 10; i++) {
     printf("%c", Board[i - 1]); // Print the board at [i-1] to print full board
     if (!(i % 3)) {
@@ -16,16 +17,14 @@ void printBoard(char *Board) {
 
 void promptPlayer(int player, char *Board) {
   int playerPos = 0;
-  int notNewline = 0;
+  int newline = 0;
 
   printf("Player %d where do you want to place your piece? 0-8: ", player);
   int inp = scanf("%d", &playerPos) == 1;
 
-  if((getchar()) != '\n'){
-    notNewline = 1;
+  while ((getchar()) != '\n') {
+    ++newline;
   }
-
-  while ((getchar()) != '\n') {}
 
   // prompting for valid postion
   // !i or (i and (!r or (r and t)))
@@ -35,15 +34,16 @@ void promptPlayer(int player, char *Board) {
      (!(playerPos >= 0 && playerPos <= 8) ||
       ((playerPos >= 0 && playerPos <= 8) &&
        (Board[playerPos] == 'X' || Board[playerPos] == 'O')))) ||
-    notNewline;
+    (newline);
 
   while(y) {
     printf("Player %d please give a valid position (0-8): ", player);
     fflush(stdout);
+    newline = 0;
     inp = scanf("%d", &playerPos) == 1;
 
     while ((getchar()) != '\n') {
-      notNewline = 1;
+      ++newline;
     }
 
     y =
@@ -52,7 +52,7 @@ void promptPlayer(int player, char *Board) {
        (!(playerPos >= 0 && playerPos <= 8) ||
 	((playerPos >= 0 && playerPos <= 8) &&
 	 (Board[playerPos] == 'X' || Board[playerPos] == 'O')))) ||
-      notNewline;
+      (newline);
   }
 
 
