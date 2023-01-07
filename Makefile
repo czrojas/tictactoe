@@ -1,15 +1,25 @@
 CC=gcc
 CFLAGS=-Wall -ggdb
-OBJS=tictactoe.o
-BIN=tictactoe
 INCLUDE=include
 SRC=src
 
-bin/$(BIN) : objs/$(OBJS)
-	$(CC) $(CFLAGS) objs/$(OBJS) -o bin/$(BIN)
+OBJS=tictactoe.o
+OBJSDIR=objs
 
-objs/$(OBJS) : $(SRC)/main.c
-	$(CC) $(CFLAGS) -I$(INCLUDE) -c $(SRC)/main.c -o objs/$(OBJS)
+BIN=tictactoe
+BUILDDIR=bin
+
+$(BUILDDIR)/$(BIN) : $(OBJSDIR)/$(OBJS) | $(BUILDDIR)
+	$(CC) $(CFLAGS) $(OBJSDIR)/$(OBJS) -o $(BUILDDIR)/$(BIN)
+
+$(OBJSDIR)/$(OBJS) : $(SRC)/main.c | $(OBJSDIR)
+	$(CC) $(CFLAGS) -I$(INCLUDE) -c $(SRC)/main.c -o $(OBJSDIR)/$(OBJS)
+
+$(BUILDDIR):
+	mkdir $(BUILDDIR)
+
+$(OBJSDIR):
+	mkdir $(OBJSDIR)
 
 clean:
-	rm bin/* objs/*
+	rm $(BUILDDIR)/* $(OBJSDIR)/*
