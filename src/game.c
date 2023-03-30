@@ -5,7 +5,7 @@ void printBoard(char *Board) {
   // Initial i is 1 in order to print newline if iteration is divisible by 3
   putc('\n', stdout);
   for (int i = 1; i < 10; i++) {
-    printf("%c", Board[i - 1]); // Print the board at [i-1] to print full board
+    printf(" %c ", Board[i - 1]); // Print the board at [i-1] to print full board
     if (!(i % 3)) {
       // When i is 3,6,9
       putc('\n', stdout);

@@ -7,6 +7,7 @@ int main() {
   int winner = -1;
   int j = 1;
 
+  
   puts("#################\nTicTacToe: Start!\n#################");
   printBoard(board);
   promptPlayer(0, board);
@@ -21,14 +22,14 @@ int main() {
 
   if (!openSpot(board)) {
     // If no spots left declare draw
-    puts("\nThe match ends in a draw.\n\n");
+    puts("\nThe match ends in a draw.\n");
     printBoard(board);
     putc('\n', stdout);
   }
 
   else {
     // Declare winner
-    printf("\nPlayer %d has won the match.\n\n", winner);
+    printf("\nPlayer %d has won the match.\n", winner);
     printBoard(board);
     putc('\n', stdout);
   }
